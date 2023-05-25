@@ -29,6 +29,8 @@
 	if(totalRow%rowPerPage != 0){
 		lastPage = lastPage + 1;
 	}
+	// 라스트페이지 확인
+	System.out.println(lastPage);
 	int minPage = (((currentPage - 1) / pagePerPage) * pagePerPage) + 1;
 	int maxPage = minPage + (pagePerPage - 1);
 	if(maxPage > lastPage){
@@ -70,7 +72,7 @@
 			<%
 				if(minPage > 1){
 			%>
-				<a href="<%=request.getContextPath()%>/subjectList.jsp?currentPage=<%=minPage-1%>">이전</a>
+				<a href="<%=request.getContextPath()%>/subject/subjectList.jsp?currentPage=<%=minPage-1%>">이전</a>
 			<%
 				} for(int i=minPage; i<=maxPage; i=i+1){
 					if(i == currentPage){
@@ -79,13 +81,13 @@
 			<%			
 					} else {
 			%>
-					<a href="<%=request.getContextPath()%>/subjectList.jsp?currentPage=<%=i%>"><%=i%></a>&nbsp;
+					<a href="<%=request.getContextPath()%>/subject/subjectList.jsp?currentPage=<%=i%>"><%=i%></a>&nbsp;
 			<%			
 					}
 				}
 				if(maxPage != lastPage){
 			%>
-				<a href ="<%=request.getContextPath()%>/subjectList.jsp?currentPage=<%=maxPage+1%>">다음</a>
+				<a href ="<%=request.getContextPath()%>/subject/subjectList.jsp?currentPage=<%=maxPage+1%>">다음</a>
 			<%		
 				}
 			%>	
