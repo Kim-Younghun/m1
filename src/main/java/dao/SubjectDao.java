@@ -3,7 +3,6 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import util.DBUtil;
@@ -14,7 +13,7 @@ public class SubjectDao {
 	public ArrayList<Subject> selectSubjectListByPage(int beginRow, int rowPerPage) throws Exception {
 		DBUtil dbutil = new DBUtil();
 		Connection conn = dbutil.getConnection();
-		String sql = "SELECT subject_no subjectNo, subject_name subjectName, subject_time subjectTime, updatedate, createdate FROM subject LIMIT ?,?";
+		String sql = "SELECT subject_no, subject_name, subject_time, updatedate, createdate FROM subject LIMIT ?,?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, beginRow);
 		stmt.setInt(2, rowPerPage);
@@ -22,9 +21,9 @@ public class SubjectDao {
 		ArrayList<Subject> list = new ArrayList<>();
 		while(rs.next()) {
 			Subject s = new Subject();
-			s.setSubjectNo(rs.getInt("subjectNo"));
-			s.setSubjectName(rs.getString("subjectName"));
-			s.setSubjectTime(rs.getInt("subjectTime"));
+			s.setSubjectNo(rs.getInt("subject_no"));
+			s.setSubjectName(rs.getString("subject_name"));
+			s.setSubjectTime(rs.getInt("subject_time"));
 			s.setCreatedate(rs.getString("createdate"));
 			s.setUpdatedate(rs.getString("updatedate"));
 			list.add(s);
@@ -36,7 +35,7 @@ public class SubjectDao {
 	public int insertSubject(Subject subject) throws Exception {
 		DBUtil dbutil = new DBUtil();
 		Connection conn = dbutil.getConnection();
-		String sql = "INSERT INTO subject(subject_name subjectName, subject_time subjectTime, updatedate, createdate) VALUES(?, ?, NOW(), NOW())";
+		String sql = "INSERT INTO subject(subject_name, subject_time, updatedate, createdate) VALUES(?, ?, NOW(), NOW())";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		
 		stmt.setString(1, subject.getSubjectName());
@@ -63,10 +62,11 @@ public class SubjectDao {
 	public int updateSubject(Subject subject) throws Exception {
 		DBUtil dbutil = new DBUtil();
 		Connection conn = dbutil.getConnection();
-		String sql = "UPDATE subject SET subject_name = ?, subject_time = ?";
+		String sql = "UPDATE subject SET subject_name = ?, subject_time = ?, updatedate=now() WHERE subject_no = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, subject.getSubjectName());
 		stmt.setInt(2, subject.getSubjectTime());
+		stmt.setInt(3, subject.getSubjectNo());
 		int row = 0;
 		row = stmt.executeUpdate();
 		return row;
@@ -77,15 +77,15 @@ public class SubjectDao {
 		Subject subject = null;
 		DBUtil dbutil = new DBUtil();
 		Connection conn = dbutil.getConnection();
-		String sql = "SELECT subject_no subjectNo, subject_name subjectName, subject_time subjectTime, updatedate, createdate FROM subject WHERE subject_no = ?";
+		String sql = "SELECT subject_no, subject_name, subject_time, updatedate, createdate FROM subject WHERE subject_no = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, subjectNo);
 		ResultSet rs = stmt.executeQuery();
 		if(rs.next()) {
 			subject = new Subject();
-			subject.setSubjectNo(rs.getInt("subjectNo"));
-			subject.setSubjectName(rs.getString("subjectName"));
-			subject.setSubjectTime(rs.getInt("subjectTime"));
+			subject.setSubjectNo(rs.getInt("subject_no"));
+			subject.setSubjectName(rs.getString("subject_name"));
+			subject.setSubjectTime(rs.getInt("subject_time"));
 			subject.setCreatedate(rs.getString("createdate"));
 			subject.setUpdatedate(rs.getString("updatedate"));
 		}

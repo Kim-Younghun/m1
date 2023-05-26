@@ -15,12 +15,12 @@
 	int beginRow = (currentPage-1) * rowPerPage;
 
 	// Dao 객체추가
-	SubjectDao sb = new SubjectDao();
+	SubjectDao sd = new SubjectDao();
 	// ArrayList에 값 담기
-	ArrayList<Subject> list = sb.selectSubjectListByPage(beginRow, rowPerPage);
+	ArrayList<Subject> list = sd.selectSubjectListByPage(beginRow, rowPerPage);
 	
 	// 전체행 메소드로 받기
-	int totalRow = sb.selectSubjectCnt();
+	int totalRow = sd.selectSubjectCnt();
 	System.out.println(totalRow);
 	
 	// 네비게이션에 표시될 페이지 수
@@ -42,27 +42,48 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+	<!-- 부트스트랩5 -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-	<div>
+	<a href="<%=request.getContextPath()%>/subject/addSubject.jsp">
+	과목추가
+	</a>
 		<h1>과목리스트</h1>
-		<table border="1">
+		<table class="table table-bordered">
 			<tr>
 				<th>과목번호</th>
 				<th>과목이름</th>
 				<th>과목시간</th>
 				<th>생성일</th>
 				<th>수정일</th>
+				<th>수정</th>
+				<th>삭제</th>
 			</tr>
 			<%
 				for(Subject s : list) {
 			%>
 			<tr>
 				<td><%=s.getSubjectNo()%></td>
-				<td><%=s.getSubjectName()%></td>
+				<td>
+					<a href="<%=request.getContextPath()%>/subject/subjectOne.jsp?subjectNo=<%=s.getSubjectNo()%>">
+						<%=s.getSubjectName()%>
+					</a>
+				</td>
 				<td><%=s.getSubjectTime()%></td>
 				<td><%=s.getCreatedate()%></td>
 				<td><%=s.getUpdatedate()%></td>
+				<td>
+					<a href="<%=request.getContextPath()%>/subject/modifySubject.jsp?subjectNo=<%=s.getSubjectNo()%>">
+					수정
+					</a>
+				</td>
+				<td>
+					<a href="<%=request.getContextPath()%>/subject/removeSubjectAction.jsp?subjectNo=<%=s.getSubjectNo()%>">
+					삭제
+					</a>
+				</td>
 			</tr>
 			<%
 				}
@@ -91,6 +112,5 @@
 			<%		
 				}
 			%>	
-	</div>
 </body>
 </html>
