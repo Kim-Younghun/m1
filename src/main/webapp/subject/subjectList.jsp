@@ -45,12 +45,16 @@
 	<!-- 부트스트랩5 -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+	<link href="../style.css" type="text/css" rel="stylesheet">
 </head>
-<body>
-	<a href="<%=request.getContextPath()%>/subject/addSubject.jsp">
-	과목추가
-	</a>
-		<h1>과목리스트</h1>
+<body>	
+	<h1 class = "center">과목리스트</h1>
+	<div class="container left" >
+		<a href="<%=request.getContextPath()%>/subject/addSubject.jsp">
+		과목추가
+		</a>
+	</div>
+	<div class="container center" >
 		<table class="table table-bordered">
 			<tr>
 				<th>과목번호</th>
@@ -89,6 +93,8 @@
 				}
 			%>
 		</table>
+	</div>
+	<div class="container center" >
 			<!-- 페이지네비게이션 -->
 			<%
 				if(minPage > 1){
@@ -111,6 +117,7 @@
 				<a href ="<%=request.getContextPath()%>/subject/subjectList.jsp?currentPage=<%=maxPage+1%>">다음</a>
 			<%		
 				}
-			%>	
+			%>
+	</div>	
 </body>
 </html>

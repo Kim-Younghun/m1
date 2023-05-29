@@ -39,11 +39,21 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+	<!-- 부트스트랩5 -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+	<style>
+		a {text-decoration: none;}
+		a:hover {text-decoration: underline;}
+		.center {text-align: center;}
+		.left {text-align: left;}
+		.right {text-align: right;}
+	</style>
 </head>
 <body>
-	<div>
-		<h1>교사리스트</h1>
-		<table border="1">
+	<h1 class = "center">교사리스트</h1>
+	<div class="container center">
+		<table class="table table-bordered">
 			<tr>
 				<th>교사이름</th>
 				<th>담당과목</th>
@@ -65,29 +75,31 @@
 				}
 			%>
 		</table>
-			<!-- 페이지네비게이션 -->
-			<%
-				if(minPage > 1){
-			%>
-				<a href="<%=request.getContextPath()%>/teacher/teacherList.jsp?currentPage=<%=minPage-1%>">이전</a>
-			<%
-				} for(int i=minPage; i<=maxPage; i=i+1){
-					if(i == currentPage){
-			%>
-					<span><%=i%></span>&nbsp;
-			<%			
-					} else {
-			%>
-					<a href="<%=request.getContextPath()%>/teacher/teacherList.jsp?currentPage=<%=i%>"><%=i%></a>&nbsp;
-			<%			
-					}
+	</div>
+	<div class="container center">
+		<!-- 페이지네비게이션 -->
+		<%
+			if(minPage > 1){
+		%>
+			<a href="<%=request.getContextPath()%>/teacher/teacherList.jsp?currentPage=<%=minPage-1%>">이전</a>
+		<%
+			} for(int i=minPage; i<=maxPage; i=i+1){
+				if(i == currentPage){
+		%>
+				<span><%=i%></span>&nbsp;
+		<%			
+				} else {
+		%>
+				<a href="<%=request.getContextPath()%>/teacher/teacherList.jsp?currentPage=<%=i%>"><%=i%></a>&nbsp;
+		<%			
 				}
-				if(maxPage != lastPage){
-			%>
-				<a href ="<%=request.getContextPath()%>/teacher/teacherList.jsp?currentPage=<%=maxPage+1%>">다음</a>
-			<%		
-				}
-			%>	
+			}
+			if(maxPage != lastPage){
+		%>
+			<a href ="<%=request.getContextPath()%>/teacher/teacherList.jsp?currentPage=<%=maxPage+1%>">다음</a>
+		<%		
+			}
+		%>	
 	</div>
 </body>
 </html>
